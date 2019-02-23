@@ -1,5 +1,5 @@
 import os
-import numpy
+import numpy as np
 from numpy import random
 import scipy
 import matplotlib
@@ -50,6 +50,11 @@ def load_MNIST_dataset():
 # returns   the aeverage gradient of the regularized loss of the examples in vector ii with respect to the model parameters
 def multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W):
     # TODO students should implement this
+    Xs, Ys = Xs[:,ii], Ys[:,ii]
+    ewx = np.exp(np.matmul(W,Xs))
+    p = np.sum(ewx, axis=0)
+    ans = 1 / Xs.shape[1] * np.matmul(-Ys+ 1/p * ewx, Xs.T) + gamma * W
+    return ans
 
 
 # compute the error of the classifier (SAME AS PROGRAMMING ASSIGNMENT 1)
@@ -60,7 +65,7 @@ def multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W):
 #
 # returns   the model error as a percentage of incorrect labels
 def multinomial_logreg_error(Xs, Ys, W):
-    # TODO students should implement this
+    return np.mean(np.argmax(np.matmul(W, Xs), axis=0) != np.argmax(Ys, axis=0))
 
 
 # ALGORITHM 1: run stochastic gradient descent on a multinomial logistic regression objective, with regularization
@@ -76,6 +81,13 @@ def multinomial_logreg_error(Xs, Ys, W):
 # returns         a list of model parameters, one every "monitor_period" iterations
 def stochastic_gradient_descent(Xs, Ys, gamma, W0, alpha, num_epochs, monitor_period):
     # TODO students should implement this
+    models = []
+    for i in range(1,num_epochs+1):
+        ii = [np.random.randint(Xs.shape[1])]
+        W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0) - alpha * gamma * W0
+        if i % monitor_period == 0:
+            models.append(W0)
+    return models
 
 
 # ALGORITHM 2: run stochastic gradient descent with sequential sampling order
@@ -91,6 +103,15 @@ def stochastic_gradient_descent(Xs, Ys, gamma, W0, alpha, num_epochs, monitor_pe
 # returns         a list of model parameters, one every "monitor_period" iterations
 def sgd_sequential_scan(Xs, Ys, gamma, W0, alpha, num_epochs, monitor_period):
     # TODO students should implement this
+    n = Xs.shape[1]
+    models = []
+    for i in range(num_epochs):
+        cur = i*n
+        for j in range(n):
+            W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, [j], gamma, W0) - alpha * gamma * W0
+            if (j+cur+1) % monitor_period == 0:
+                models.append(W0)
+    return models
 
 
 # ALGORITHM 3: run stochastic gradient descent with minibatching
