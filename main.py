@@ -82,7 +82,7 @@ def multinomial_logreg_error(Xs, Ys, W):
 def stochastic_gradient_descent(Xs, Ys, gamma, W0, alpha, num_epochs, monitor_period):
     # TODO students should implement this
     models = []
-    for i in range(1,num_epochs+1):
+    for i in range(1,num_epochs*Xs.shape[1]+1):
         ii = [np.random.randint(Xs.shape[1])]
         W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0) - alpha * gamma * W0
         if i % monitor_period == 0:
@@ -128,6 +128,14 @@ def sgd_sequential_scan(Xs, Ys, gamma, W0, alpha, num_epochs, monitor_period):
 # returns         a list of model parameters, one every "monitor_period" batches
 def sgd_minibatch(Xs, Ys, gamma, W0, alpha, B, num_epochs, monitor_period):
     # TODO students should implement this
+    n = Xs.shape[1]
+    models = []
+    for i in range(1,num_epochs * n // B+1):
+        ii = np.random.randint(n,size=B)
+        W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0) - alpha * gamma * W0
+        if i % monitor_period == 0:
+            models.append(W0)
+    return models
 
 
 # ALGORITHM 4: run stochastic gradient descent with minibatching and sequential sampling order
@@ -144,6 +152,16 @@ def sgd_minibatch(Xs, Ys, gamma, W0, alpha, B, num_epochs, monitor_period):
 # returns         a list of model parameters, one every "monitor_period" batches
 def sgd_minibatch_sequential_scan(Xs, Ys, gamma, W0, alpha, B, num_epochs, monitor_period):
     # TODO students should implement this
+    n = Xs.shape[1]
+    models = []
+    for i in range(num_epochs):
+        cur = i*n
+        for j in range(n // B):
+            ii = np.arange(j*B,(j+1)*B)
+            W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0) - alpha * gamma * W0
+            if (j+cur+1) % monitor_period == 0:
+                models.append(W0)
+    return models
     
 
 if __name__ == "__main__":
