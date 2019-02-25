@@ -22,18 +22,18 @@ def load_MNIST_dataset():
         mnist_data = mnist.MNIST(mnist_data_directory, return_type="numpy", gz=True)
         Xs_tr, Lbls_tr = mnist_data.load_training();
         Xs_tr = Xs_tr.transpose() / 255.0
-        Ys_tr = numpy.zeros((10, 60000))
+        Ys_tr = np.zeros((10, 60000))
         for i in range(60000):
             Ys_tr[Lbls_tr[i], i] = 1.0  # one-hot encode each label
-        Xs_tr = numpy.ascontiguousarray(Xs_tr)
-        Ys_tr = numpy.ascontiguousarray(Ys_tr)
+        Xs_tr = np.ascontiguousarray(Xs_tr)
+        Ys_tr = np.ascontiguousarray(Ys_tr)
         Xs_te, Lbls_te = mnist_data.load_testing();
         Xs_te = Xs_te.transpose() / 255.0
-        Ys_te = numpy.zeros((10, 10000))
+        Ys_te = np.zeros((10, 10000))
         for i in range(10000):
             Ys_te[Lbls_te[i], i] = 1.0  # one-hot encode each label
-        Xs_te = numpy.ascontiguousarray(Xs_te)
-        Ys_te = numpy.ascontiguousarray(Ys_te)
+        Xs_te = np.ascontiguousarray(Xs_te)
+        Ys_te = np.ascontiguousarray(Ys_te)
         dataset = (Xs_tr, Ys_tr, Xs_te, Ys_te)
         pickle.dump(dataset, open(PICKLE_FILE, 'wb'))
     return dataset
@@ -155,7 +155,7 @@ def sgd_minibatch_sequential_scan(Xs, Ys, gamma, W0, alpha, B, num_epochs, monit
     n = Xs.shape[1]
     models = []
     for i in range(num_epochs):
-        cur = i*n
+        cur = i*(n//B)
         for j in range(n // B):
             ii = np.arange(j*B,(j+1)*B)
             W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0) - alpha * gamma * W0
@@ -167,3 +167,86 @@ def sgd_minibatch_sequential_scan(Xs, Ys, gamma, W0, alpha, B, num_epochs, monit
 if __name__ == "__main__":
     (Xs_tr, Ys_tr, Xs_te, Ys_te) = load_MNIST_dataset()
     # TODO add code to produce figures
+    import timeit
+    gamma, alpha, alpha_m = 0.0001, 0.001, 0.05
+    num_epochs, monitor_period, monitor_period_m = 10, 6000, 100
+    batch_size = 60
+    c,_ = Ys_tr.shape
+    d,_ = Xs_tr.shape
+    W0 = np.zeros((c,d))
+
+    def get_error(Xs, Ys, models):
+        return [multinomial_logreg_error(Xs, Ys, W) for W in models]
+
+    sgd = lambda : stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
+
+    sgd_seq = lambda : sgd_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
+
+    sgd_mini = lambda :sgd_minibatch(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
+
+    sgd_mini_seq = lambda : sgd_minibatch_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
+
+    algos = [sgd, sgd_seq, sgd_mini, sgd_mini_seq]
+    names = ["SGD", "SGD Sequential", "SGD Minibatch", "SGD Minibatch Sequential"]
+    models = []
+
+    for algo, name in zip(algos, names):
+        models.append(algo())
+        print(name," done")
+
+    # Get model errors
+    model_error_tr = [get_error(Xs_tr, Ys_tr, model) for model in models]
+    print("Errors for training set done")
+    model_error_te = [get_error(Xs_te, Ys_te, model) for model in models]
+    print("Errors for test set done")
+
+    t = .1 * np.arange(len(models[0])) + .1
+
+    # plot training error as a function of epochs
+    pyplot.figure(1)
+    pyplot.xlabel('Epochs')
+    pyplot.ylabel('Error')
+    pyplot.title('MNIST Training Error')
+    pyplot.grid(True)
+    for name, error in zip(names,model_error_tr):
+        pyplot.plot(t, error, label=name)
+    pyplot.gca().legend()
+    pyplot.savefig('training.png', bbox_inches='tight')
+    # plot test error as a function of epochs
+    pyplot.figure(2)
+    pyplot.xlabel('Epochs')
+    pyplot.ylabel('Error')
+    pyplot.title('MNIST Test Error')
+    pyplot.grid(True)
+    for name, error in zip(names,model_error_te):
+        pyplot.plot(t, error, label=name)
+    pyplot.gca().legend()
+    pyplot.savefig('test.png', bbox_inches='tight')
+
+    def time_algos(names, algos):
+        times = []
+        for algo, name in zip(names,algos):
+            time = 0
+            for _ in range(5):
+                time -= timeit.default_timer()
+                _ = algo()
+                time += timeit.default_timer()
+            times.append(time/5)
+        return times
+
+    # Make plots for the average runtimes
+    times = time_algos(names, algos)
+
+    names = ('Full', 'Subsample 1000', 'Subsample 100')
+    x_positions = np.arange(len(names))
+
+    # plot runtime for training
+    pyplot.figure(3)
+    pyplot.bar(x_positions, times, align='center', alpha=0.5)
+    pyplot.xticks(x_positions, names)
+    pyplot.ylabel('Average runtime (per model)')
+    pyplot.xlabel('Models')
+    pyplot.title('Runtime of Training - SGD')
+    for i, v in enumerate(performance_tr):
+        pyplot.text(i-.25, v * (1.01), " " + str(round(v,5)), color='black', va='center', fontweight='bold')
+    pyplot.savefig('train_time.png', bbox_inches='tight')
