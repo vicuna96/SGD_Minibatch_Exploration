@@ -187,7 +187,7 @@ if __name__ == "__main__":
     sgd_mini_seq = lambda : sgd_minibatch_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
 
     algos = [sgd, sgd_seq, sgd_mini, sgd_mini_seq]
-    names = ["SGD", "SGD Sequential", "SGD Minibatch", "SGD Minibatch Sequential"]
+    names = ["SGD Random", "SGD Sequential", "SGD Minibatch", "SGD Minibatch Sequential"]
     models = []
 
     for algo, name in zip(algos, names):
@@ -202,51 +202,50 @@ if __name__ == "__main__":
 
     t = .1 * np.arange(len(models[0])) + .1
 
-    # plot training error as a function of epochs
-    pyplot.figure(1)
-    pyplot.xlabel('Epochs')
-    pyplot.ylabel('Error')
-    pyplot.title('MNIST Training Error')
-    pyplot.grid(True)
-    for name, error in zip(names,model_error_tr):
-        pyplot.plot(t, error, label=name)
-    pyplot.gca().legend()
-    pyplot.savefig('training.png', bbox_inches='tight')
-    # plot test error as a function of epochs
-    pyplot.figure(2)
-    pyplot.xlabel('Epochs')
-    pyplot.ylabel('Error')
-    pyplot.title('MNIST Test Error')
-    pyplot.grid(True)
-    for name, error in zip(names,model_error_te):
-        pyplot.plot(t, error, label=name)
-    pyplot.gca().legend()
-    pyplot.savefig('test.png', bbox_inches='tight')
+    ''' Plot the model error for the models, whose respective names are given by [names].
+        Save the image by the name [title].png and inlude [title] in the figure title '''
+    def plot_error(model_error, names, title):
+        pyplot.figure(np.random.randint(1000))
+        pyplot.xlabel('Epochs')
+        pyplot.ylabel('Error')
+        pyplot.title('MNIST '+title+' Error')
+        pyplot.grid(True)
+        for name, error in zip(names,model_error):
+            pyplot.plot(t, error, label=name)
+        pyplot.gca().legend()
+        pyplot.savefig(title+'.png', bbox_inches='tight')
 
+    # plot training error as a function of epochs
+    plot_error(model_error_tr, names, "Training")
+    # plot test error as a function of epochs
+    plot_error(model_error_te, names, "Test")
+
+    ''' Time the algorightms in [algos], whose respective names are given by [names],
+        by averaging the runtime of the algorithm over 5 runs. 
+        PreC :The algorithms must be lambdas that take no inputs '''
     def time_algos(names, algos):
         times = []
-        for algo, name in zip(names,algos):
+        for name, algo in zip(names,algos):
             time = 0
             for _ in range(5):
                 time -= timeit.default_timer()
                 _ = algo()
                 time += timeit.default_timer()
             times.append(time/5)
+            print(name,time/5,"s")
         return times
 
     # Make plots for the average runtimes
     times = time_algos(names, algos)
-
-    names = ('Full', 'Subsample 1000', 'Subsample 100')
     x_positions = np.arange(len(names))
 
-    # plot runtime for training
+    # plot runtime for training as a bar graph
     pyplot.figure(3)
     pyplot.bar(x_positions, times, align='center', alpha=0.5)
-    pyplot.xticks(x_positions, names)
+    pyplot.xticks(x_positions, [name[4:] for name in names])
     pyplot.ylabel('Average runtime (per model)')
     pyplot.xlabel('Models')
     pyplot.title('Runtime of Training - SGD')
-    for i, v in enumerate(performance_tr):
-        pyplot.text(i-.25, v * (1.01), " " + str(round(v,5)), color='black', va='center', fontweight='bold')
+    for i, v in enumerate(times):
+        pyplot.text(i-.25, v * (1.015), " " + str(round(v,2)), color='black', va='center', fontweight='bold')
     pyplot.savefig('train_time.png', bbox_inches='tight')
