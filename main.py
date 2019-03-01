@@ -203,16 +203,15 @@ if __name__ == "__main__":
     # t = .1 * np.arange(len(models[0])) + .1
 
     ''' Plot the model error for the models, whose respective names are given by [names].
-        Save the image by the name [title].png and inlude [title] in the figure title '''
-    def plot_error(model_error, names, title):
+        Save the image by the name [title].png and indlude [title] in the figure title '''
+    def plot_error(model_error, names, title, scale=1):
         pyplot.figure(np.random.randint(1000))
         pyplot.xlabel('Epochs')
         pyplot.ylabel('Error')
         pyplot.title('MNIST '+title+' Error')
         pyplot.grid(True)
-        t = .1 * np.arange(len(model_error[0])) + .1
         for name, error in zip(names,model_error):
-            pyplot.plot(t, error, label=name)
+            pyplot.plot(t/scale, error, label=name)
         pyplot.gca().legend()
         pyplot.savefig(title+'.png', bbox_inches='tight')
     #
@@ -294,9 +293,9 @@ if __name__ == "__main__":
     # Exploration 4
 
     num_epochs = 5
-    startAlpha, endAlpha = 1.1 * alpha_m, 1.3 * alpha_m
+    startAlpha, endAlpha = 1.1 * alpha_m, 1.2 * alpha_m
     alphaStep = .04 * alpha_m
-    batch_start, num_betas = 25, 8
+    batch_start, num_betas = 23, 6
 
     def get_error_save_2d(model, alpha, batch):
         error = get_error(Xs_tr,Ys_tr,model)
@@ -335,7 +334,8 @@ if __name__ == "__main__":
 
     new_alpha, new_B = cartesian(alphas,betas)[np.argmin(min_errors)]
 
-    #t = .1 * np.arange(len(errors[0])) + .1
+    t = .1 * np.arange(len(errors[np.argmin(min_errors)])) + .1
+    t = t / np.max(t) * 5
 
     plot_error([errors[np.argmin(min_errors)]],
                ['\\alpha = ' + str(round(new_alpha, 5))+' '+'B = ' + str(round(new_B, 5))],
