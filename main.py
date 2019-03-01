@@ -168,6 +168,12 @@ if __name__ == "__main__":
     (Xs_tr, Ys_tr, Xs_te, Ys_te) = load_MNIST_dataset()
     # TODO add code to produce figures
     import timeit
+    implementation = False
+    part1 = False
+    part2 = False
+    part3 = False
+    part4 = False
+
     gamma, alpha, alpha_m = 0.0001, 0.001, 0.05
     num_epochs, monitor_period, monitor_period_m = 10, 6000, 100
     batch_size = 60
@@ -177,30 +183,18 @@ if __name__ == "__main__":
 
     def get_error(Xs, Ys, models):
         return [multinomial_logreg_error(Xs, Ys, W) for W in models]
-    #
-    # sgd = lambda : stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
-    #
-    # sgd_seq = lambda : sgd_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
-    #
-    # sgd_mini = lambda :sgd_minibatch(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
-    #
-    # sgd_mini_seq = lambda : sgd_minibatch_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
-    #
-    # algos = [sgd, sgd_seq, sgd_mini, sgd_mini_seq]
-    # names = ["SGD Random", "SGD Sequential", "SGD Minibatch", "SGD Minibatch Sequential"]
-    # models = []
-    #
-    # for algo, name in zip(algos, names):
-    #     models.append(algo())
-    #     print(name," done")
-    #
-    # # Get model errors
-    # model_error_tr = [get_error(Xs_tr, Ys_tr, model) for model in models]
-    # print("Errors for training set done")
-    # model_error_te = [get_error(Xs_te, Ys_te, model) for model in models]
-    # print("Errors for test set done")
-    #
-    # t = .1 * np.arange(len(models[0])) + .1
+
+    sgd = lambda : \
+        stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
+
+    sgd_seq = lambda : \
+        sgd_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
+
+    sgd_mini = lambda :\
+        sgd_minibatch(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
+
+    sgd_mini_seq = lambda : \
+        sgd_minibatch_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch_size, num_epochs, monitor_period_m)
 
     ''' Plot the model error for the models, whose respective names are given by [names].
         Save the image by the name [title].png and indlude [title] in the figure title '''
@@ -214,132 +208,159 @@ if __name__ == "__main__":
             pyplot.plot(t/scale, error, label=name)
         pyplot.gca().legend()
         pyplot.savefig(title+'.png', bbox_inches='tight')
-    #
-    # # plot training error as a function of epochs
-    # plot_error(model_error_tr, names, "Training")
-    # # plot test error as a function of epochs
-    # plot_error(model_error_te, names, "Test")
-    #
-    # ''' Time the algorightms in [algos], whose respective names are given by [names],
-    #     by averaging the runtime of the algorithm over 5 runs.
-    #     PreC :The algorithms must be lambdas that take no inputs '''
-    # def time_algos(names, algos):
-    #     times = []
-    #     for name, algo in zip(names,algos):
-    #         time = 0
-    #         for _ in range(5):
-    #             time -= timeit.default_timer()
-    #             _ = algo()
-    #             time += timeit.default_timer()
-    #         times.append(time/5)
-    #         print(name,time/5,"seconds")
-    #     return times
-    #
-    # # Make plots for the average runtimes
-    # times = time_algos(names, algos)
-    # x_positions = np.arange(len(names))
-    #
-    # # plot runtime for training as a bar graph
-    # pyplot.figure(3)
-    # pyplot.bar(x_positions, times, align='center', alpha=0.5)
-    # pyplot.xticks(x_positions, [name[4:] for name in names])
-    # pyplot.ylabel('Average runtime (per model)')
-    # pyplot.xlabel('Models')
-    # pyplot.title('Runtime of Training - SGD')
-    # for i, v in enumerate(times):
-    #     pyplot.text(i-.25, v * (1.015), " " + str(round(v,2)), color='black', va='center', fontweight='bold')
-    # pyplot.savefig('train_time.png', bbox_inches='tight')
+
+    if implementation:
+        algos = [sgd, sgd_seq, sgd_mini, sgd_mini_seq]
+        names = ["SGD Random", "SGD Sequential", "SGD Minibatch", "SGD Minibatch Sequential"]
+        models = []
+
+        for algo, name in zip(algos, names):
+            models.append(algo())
+            print(name," done")
+
+        # Get model errors
+        model_error_tr = [get_error(Xs_tr, Ys_tr, model) for model in models]
+        print("Errors for training set done")
+        model_error_te = [get_error(Xs_te, Ys_te, model) for model in models]
+        print("Errors for test set done")
+
+        t = .1 * np.arange(len(models[0])) + .1
+
+        # plot training error as a function of epochs
+        plot_error(model_error_tr, names, "Training5")
+        # plot test error as a function of epochs
+        plot_error(model_error_te, names, "Test5")
+
+        ''' Time the algorightms in [algos], whose respective names are given by [names],
+            by averaging the runtime of the algorithm over 5 runs.
+            PreC :The algorithms must be lambdas that take no inputs '''
+        def time_algos(names, algos):
+            times = []
+            for name, algo in zip(names,algos):
+                time = 0
+                for _ in range(5):
+                    time -= timeit.default_timer()
+                    _ = algo()
+                    time += timeit.default_timer()
+                times.append(time/5)
+                print(name,time/5,"seconds")
+            return times
+
+        # Make plots for the average runtimes
+        times = time_algos(names, algos)
+        x_positions = np.arange(len(names))
+
+        # plot runtime for training as a bar graph
+        pyplot.figure(3)
+        pyplot.bar(x_positions, times, align='center', alpha=0.5)
+        pyplot.xticks(x_positions, [name[4:] for name in names])
+        pyplot.ylabel('Average runtime (per model)')
+        pyplot.xlabel('Models')
+        pyplot.title('Runtime of Training - SGD')
+        for i, v in enumerate(times):
+            pyplot.text(i-.25, v * (1.015), " " + str(round(v,2)), color='black', va='center', fontweight='bold')
+        pyplot.savefig('train_time.png', bbox_inches='tight')
 
 
+    if part1:
+        # Exploration 1
+        alpha = 0.00348
 
-    # # Exploration 1
-    # alpha = alpha / 5
-    #
-    # sgd = lambda: stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
-    # model = sgd()
-    # error = [get_error(Xs_te, Ys_te, model)]
-    #
-    # t = .1 * np.arange(len(model)) + .1
-    #
-    # plot_error(error, ['SGD with step size = '+str(round(alpha,5))], "SGD Exploration")
+        sgd = lambda: stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
+        model = sgd()
+        error_tr = [get_error(Xs_tr, Ys_tr, model)]
+        error_te = [get_error(Xs_te, Ys_te, model)]
 
-    #
-    # # Exploration 3
-    #
-    # num_epochs = 5
-    #
-    # def get_error_save(model, alpha):
-    #     error = get_error(Xs_tr,Ys_tr,model)
-    #     min_error = np.average(error[-3:])
-    #     f = open("alpha_errors_tr.txt",'a')
-    #     f.write(str(alpha)+" "+str(min_error)+'\n')
-    #     f.closed
-    #     return error, min_error
-    #
-    #
-    # sgd = lambda alpha : stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
-    # alphas = np.arange(2.2*alpha, 2.4*alpha, .01*alpha)
-    # errors_and_min = [get_error_save(sgd(alpha), alpha) for alpha in alphas]
-    # errors, min_errors = [error for error, _ in errors_and_min], [min_error for _, min_error in errors_and_min]
-    # new_alpha = alphas[np.argmin(min_errors)]
-    #
-    # t = .1 * np.arange(len(errors[0])) + .1
-    #
-    # plot_error([errors[np.argmin(min_errors)]], ['Training SGD with step size = ' + str(round(new_alpha, 5))],
-    #            "SGD Exploration Train")
-    # plot_error([get_error(Xs_te,Ys_te,sgd(new_alpha))], ['Test SGD with step size = '+str(round(new_alpha,5))], "SGD Exploration Test")
+        t = .1 * np.arange(len(model)) + .1
+
+        plot_error(error_te, ['SGD \\alpha = '+str(round(alpha,5))], "SGD Exploration Training")
+        plot_error(error_tr, ['SGD \\alpha = ' + str(round(alpha, 5))], "SGD Exploration Test")
+
+
+        # Exploration 3
+    if part3:
+        num_epochs = 5
+        alpha_start, alpha_step, alpha_end = 2.5*alpha, .01*alpha, 3.0*alpha
+
+        def get_error_save(model, alpha):
+            error = get_error(Xs_tr,Ys_tr,model)
+            min_error = np.average(error[-3:])
+            f = open("alpha_errors_tr10.txt",'a')
+            f.write(str(alpha)+" "+str(min_error)+'\n')
+            f.closed
+            print(str(alpha) + " " + str(min_error))
+            return error, min_error
+
+
+        sgd = lambda alpha : \
+            stochastic_gradient_descent(Xs_tr, Ys_tr, gamma, W0, alpha, num_epochs, monitor_period)
+        alphas = np.arange(alpha_start, alpha_end, alpha_step)
+        errors_and_min = [get_error_save(sgd(alpha), alpha) for alpha in alphas]
+        errors = [error for error, _ in errors_and_min]
+        min_errors = [min_error for _, min_error in errors_and_min]
+        new_alpha = alphas[np.argmin(min_errors)]
+
+        t = .1 * np.arange(len(errors[0])) + .1
+
+        plot_error([errors[np.argmin(min_errors)]], ['Training SGD with step size = ' + str(round(new_alpha, 5))],
+                   "SGD Exploration Train 10 Epochs")
+        plot_error([get_error(Xs_te,Ys_te,sgd(new_alpha))], ['Test SGD with step size = '+str(round(new_alpha,5))],
+                   "SGD Exploration Test 10 Epochs")
 
 
     # Exploration 4
+    if part4:
+        num_epochs = 5
+        startAlpha, endAlpha = 1.1 * alpha_m, 1.2 * alpha_m
+        alphaStep = .04 * alpha_m
+        batch_start, num_betas = 23, 6
 
-    num_epochs = 5
-    startAlpha, endAlpha = 1.1 * alpha_m, 1.2 * alpha_m
-    alphaStep = .04 * alpha_m
-    batch_start, num_betas = 23, 6
+        def get_error_save_2d(model, alpha, batch):
+            error = get_error(Xs_tr,Ys_tr,model)
+            min_error = np.average(error[-3:])
+            f = open("alpha_batch_errors_tr.txt",'a')
+            f.write(str(alpha)+" "+str(batch)+" "+str(min_error)+'\n')
+            f.closed
+            print(str(alpha)+" "+str(batch)+" "+str(min_error))
+            return error, min_error
 
-    def get_error_save_2d(model, alpha, batch):
-        error = get_error(Xs_tr,Ys_tr,model)
-        min_error = np.average(error[-3:])
-        f = open("alpha_batch_errors_tr.txt",'a')
-        f.write(str(alpha)+" "+str(batch)+" "+str(min_error)+'\n')
-        f.closed
-        print(str(alpha)+" "+str(batch)+" "+str(min_error))
-        return error, min_error
+        def cartesian(lst1, lst2):
+            return [(x,y) for x in lst1 for y in lst2]
 
-    def cartesian(lst1, lst2):
-        return [(x,y) for x in lst1 for y in lst2]
-
-    def valid_batch_sizes(start,number,increasing=True):
-        numbers, counter = [], start
-        for _ in range(number):
-            while 60000 % counter != 0 and counter>0:
+        def valid_batch_sizes(start,number,increasing=True):
+            numbers, counter = [], start
+            for _ in range(number):
+                while 60000 % counter != 0 and counter>0:
+                    if increasing:
+                        counter+=1
+                    else:
+                        counter-=1
+                numbers.append(counter)
                 if increasing:
-                    counter+=1
+                    counter += 1
                 else:
-                    counter-=1
-            numbers.append(counter)
-            if increasing:
-                counter += 1
-            else:
-                counter -= 1
-        return numbers
+                    counter -= 1
+            return numbers
 
 
-    sgd_mini = lambda alpha_m, batch : sgd_minibatch_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch, num_epochs, monitor_period_m)
-    alphas = np.arange(startAlpha, endAlpha, alphaStep)
-    betas = valid_batch_sizes(batch_start,num_betas,increasing=False)
-    print(cartesian(alphas,betas))
-    errors_and_min = [get_error_save_2d(sgd_mini(alpha, int(batch)), alpha, int(batch)) for alpha, batch in cartesian(alphas,betas)]
-    errors, min_errors = [error for error, _ in errors_and_min], [min_error for _, min_error in errors_and_min]
+        sgd_mini = lambda alpha_m, batch : \
+            sgd_minibatch_sequential_scan(Xs_tr, Ys_tr, gamma, W0, alpha_m, batch, num_epochs, monitor_period_m)
+        alphas = np.arange(startAlpha, endAlpha, alphaStep)
+        betas = valid_batch_sizes(batch_start,num_betas,increasing=False)
+        print(cartesian(alphas,betas))
+        errors_and_min = [get_error_save_2d(sgd_mini(alpha, int(batch)), alpha, int(batch))
+                          for alpha, batch in cartesian(alphas,betas)]
+        errors = [error for error, _ in errors_and_min]
+        min_errors =  [min_error for _, min_error in errors_and_min]
 
-    new_alpha, new_B = cartesian(alphas,betas)[np.argmin(min_errors)]
+        new_alpha, new_B = cartesian(alphas,betas)[np.argmin(min_errors)]
 
-    t = .1 * np.arange(len(errors[np.argmin(min_errors)])) + .1
-    t = t / np.max(t) * 5
+        t = .1 * np.arange(len(errors[np.argmin(min_errors)])) + .1
+        t = t / np.max(t) * 5
 
-    plot_error([errors[np.argmin(min_errors)]],
-               ['\\alpha = ' + str(round(new_alpha, 5))+' '+'B = ' + str(round(new_B, 5))],
-               "SGD Minibatch Exploration Train")
-    plot_error([get_error(Xs_te,Ys_te,sgd_mini(new_alpha, new_B))],
-               ['\\alpha = ' + str(round(new_alpha, 5))+' '+'B = ' + str(round(new_B, 5))],
-               "SGD Minibatch Exploration Test")
+        plot_error([errors[np.argmin(min_errors)]],
+                   ['\\alpha = ' + str(round(new_alpha, 5))+' '+'B = ' + str(round(new_B, 5))],
+                   "SGD Minibatch Exploration Train")
+        plot_error([get_error(Xs_te,Ys_te,sgd_mini(new_alpha, new_B))],
+                   ['\\alpha = ' + str(round(new_alpha, 5))+' '+'B = ' + str(round(new_B, 5))],
+                   "SGD Minibatch Exploration Test")
