@@ -84,7 +84,7 @@ def stochastic_gradient_descent(Xs, Ys, gamma, W0, alpha, num_epochs, monitor_pe
     models = []
     for i in range(1,num_epochs*Xs.shape[1]+1):
         ii = [np.random.randint(Xs.shape[1])]
-        W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0) - alpha * gamma * W0
+        W0 = W0 - alpha * multinomial_logreg_grad_i(Xs, Ys, ii, gamma, W0)
         if i % monitor_period == 0:
             models.append(W0)
     return models
@@ -168,6 +168,25 @@ if __name__ == "__main__":
     (Xs_tr, Ys_tr, Xs_te, Ys_te) = load_MNIST_dataset()
     # TODO add code to produce figures
     import timeit
+
+    from argparse import ArgumentParser
+
+    # Define the parser to run script on cmd
+    parser = ArgumentParser(add_help=True)
+    parser.add_argument("--implementation", action='store_true',
+                        help="To test implementation part of the assignment")
+    parser.add_argument("--part1", action='store_true',
+                        help="To run part 1 of the assignment")
+    parser.add_argument("--part2", action='store_true',
+                        help="To run part 2 of the assignment")
+    parser.add_argument("--part3", action='store_true',
+                        help="To run part 3 of the assignment")
+    parser.add_argument("--part4", action='store_true',
+                        help="To run part 4 of the assignment")
+
+    args = parser.parse_args()
+
+
     implementation = False
     part1 = False
     part2 = False
@@ -209,7 +228,7 @@ if __name__ == "__main__":
         pyplot.gca().legend()
         pyplot.savefig(title+'.png', bbox_inches='tight')
 
-    if implementation:
+    if args.implementation:
         algos = [sgd, sgd_seq, sgd_mini, sgd_mini_seq]
         names = ["SGD Random", "SGD Sequential", "SGD Minibatch", "SGD Minibatch Sequential"]
         models = []
@@ -262,7 +281,7 @@ if __name__ == "__main__":
         pyplot.savefig('train_time.png', bbox_inches='tight')
 
 
-    if part1:
+    if args.part1:
         # Exploration 1
         alpha = 0.00348
 
@@ -278,7 +297,7 @@ if __name__ == "__main__":
 
 
         # Exploration 3
-    if part3:
+    if args.part3:
         num_epochs = 5
         alpha_start, alpha_step, alpha_end = 2.5*alpha, .01*alpha, 3.0*alpha
 
@@ -309,7 +328,7 @@ if __name__ == "__main__":
 
 
     # Exploration 4
-    if part4:
+    if args.part4:
         num_epochs = 5
         startAlpha, endAlpha = 1.1 * alpha_m, 1.2 * alpha_m
         alphaStep = .04 * alpha_m
