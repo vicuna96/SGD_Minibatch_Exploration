@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0061)http://www.cs.cornell.edu/courses/cs4787/2019sp/projects/pa2/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+     
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project 2 | CS 4787 Spring 2019</title>
+
+    <link rel="stylesheet" href="./Writeup_files/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+    <script src="./Writeup_files/katex.min.js.download" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+    <script src="./Writeup_files/auto-render.min.js.download" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="./Writeup_files/pseudocode.min.css">
+    <script src="./Writeup_files/pseudocode.min.js.download"></script>
+
+    <script type="text/javascript">
+      function render_algorithms() {
+        var docElems = document.getElementsByClassName("pseudocode-algorithm");
+        for (var i = 0; i < docElems.length; i++) {
+          var code = docElems[i].textContent;
+          docElems[i].innerHTML = '';
+          var options = {
+              lineNumber: true
+          };
+          pseudocode.render(code, docElems[i], options);
+        }
+        renderMathInElement(document.body);
+      }
+    </script>
+
+    <style>
+      body {
+        font-family: Garamond, Georgia, serif;
+        width: 850px;
+        margin: auto;
+        background-color: #E5E4E2;
+        text-align: justify;
+      }
+
+      h1,h2 {
+        text-align: center;
+      }
+
+      #syllabus-link {
+        text-align: center;
+      }
+
+      #info {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      td {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+
+      #info td:nth-child(odd) {
+        font-weight: bold;
+        text-align: right;
+      }
+
+      #info td:nth-child(2) {
+        padding-right: 40px;
+      }
+
+      hr {
+        border-width: 2px;
+      }
+
+      .bf {
+        font-weight: bold;
+      }
+
+      .notice {
+        font-weight: bold;
+        color: red;
+        font-size: larger;
+      }
+
+      .red {
+        color: red;
+        font-weight: bold;
+      }
+
+      #calendar {
+        border-collapse: collapse
+      }
+
+      #calendar td {
+        vertical-align: top;
+      }
+
+      #calendar td:nth-child(1) {
+        text-align: right;
+        border-right: 2px solid #888888;
+      }
+
+      #calendar tr:nth-child(even) {
+        background-color: #C0C0C0;
+      }
+
+      .lecture {
+        font-weight: bold;
+      }
+
+      ul {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      ol {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      li {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .due {
+        color: blue;
+        font-weight: bold;
+      }
+
+      .paper {
+        font-weight: bold;
+      }
+
+      .venue {
+        font-style: italic;
+      }
+
+      .backgroundmat {
+        font-size: small;
+      }
+
+      .backgroundmat p {
+        margin-bottom: 0px;
+      }
+
+      .pseudocode-algorithm {
+        max-width: 600px;
+        margin: auto;
+      }
+    </style>
+  <style type="text/css">.backpack.dropzone {
+  font-family: 'SF UI Display', 'Segoe UI';
+  font-size: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 150px;
+  font-weight: lighter;
+  color: white;
+  will-change: right;
+  z-index: 2147483647;
+  bottom: 20%;
+  background: #333;
+  position: fixed;
+  user-select: none;
+  transition: left .5s, right .5s;
+  right: 0px; }
+  .backpack.dropzone .animation {
+    height: 80px;
+    width: 250px;
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/hoverstate.png") left center; }
+  .backpack.dropzone .title::before {
+    content: 'Save to'; }
+  .backpack.dropzone.closed {
+    right: -250px; }
+  .backpack.dropzone.hover .animation {
+    animation: sxt-play-anim-hover 0.91s steps(21);
+    animation-fill-mode: forwards;
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/hoverstate.png") left center; }
+
+@keyframes sxt-play-anim-hover {
+  from {
+    background-position: 0px; }
+  to {
+    background-position: -5250px; } }
+  .backpack.dropzone.saving .title::before {
+    content: 'Saving to'; }
+  .backpack.dropzone.saving .animation {
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/saving_loop.png") left center;
+    animation: sxt-play-anim-saving steps(59) 2.46s infinite; }
+
+@keyframes sxt-play-anim-saving {
+  100% {
+    background-position: -14750px; } }
+  .backpack.dropzone.saved .title::before {
+    content: 'Saved to'; }
+  .backpack.dropzone.saved .animation {
+    background: url("chrome-extension://lifbcibllhkdhoafpjfnlhfpfgnpldfl/assets/backpack/dropzone/saved.png") left center;
+    animation: sxt-play-anim-saved steps(20) 0.83s forwards; }
+
+@keyframes sxt-play-anim-saved {
+  100% {
+    background-position: -5000px; } }
+</style></head>
+  
+  <body onload="render_algorithms()">
+    <h1>Programming Assignment 2: Scaling with SGD</h1>
+    <h2>CS4787 — Principles of Large-Scale Machine Learning — Spring 2019</h2>
+
+    <p><b>Project Due:</b> February 27, 2019 at 11:59pm</p>
+
+    <p><b>Late Policy:</b> Up to two slip days can be used for the final submission.</p>
+
+    <p>Please submit all required documents to CMS.</p>
+
+    <p>
+        This is a partner project. You can either work alone, or work <u><b>ONLY</b></u> with your chosen partner. Failure to adhere to this rule (by e.g. copying code) may result in an Academic Integrity Violation.
+    </p>
+
+    <p>
+      <span class="bf">Overview:</span> In this project, you will be implementing and evaluating stochastic gradient descent on the same MNIST task as in Programming Assignment 1.
+      You will also be evaluating the effects of different learning rates and batch sizes, as well as exploring empirically the impact of using different sampling schemes for stochastic gradient descent.
+    </p>
+
+    <p>
+      <span class="bf">Background:</span> So far in class, we've been talking about stochastic gradient descent implemented as the following
+    </p>
+
+    <div class="pseudocode-algorithm" style="display:hidden;"><div class="ps-root">
+<div class="ps-algorithm with-caption">
+<p class="ps-line" style="text-indent:-1.2em;padding-left:1.2em;">
+<span class="ps-keyword">Algorithm 1 </span>Stochastic Gradient Descent with Fixed <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> and Random Sampling</p>
+<div class="ps-algorithmic with-linenum">
+<div class="ps-block" style="margin-left:1.7999999999999998em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">1:</span><span class="ps-keyword">procedure </span><span class="ps-funcname">SGD</span>(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>f</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>f</mi><mi>n</mi></msub><mo>)</mo><mo separator="true">,</mo><mi>α</mi><mo separator="true">,</mo><msub><mi>w</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">(f_1, \ldots, f_n), \alpha, w_0, T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>)</p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">2:</span><span style="font-weight:bold;">initialize</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><msub><mi>w</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">w \leftarrow w_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">3:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">4:</span><span style="font-weight:bold;">sample</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>i</mi><mo>~</mo></mover></mrow><annotation encoding="application/x-tex">\tilde i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89638em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.89638em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault">i</span></span><span style="top:-3.57852em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">~</span></span></span></span></span></span></span></span></span> <span style="font-weight:bold;">uniformly at random from</span>   <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>n</mi><mo>}</mo></mrow><annotation encoding="application/x-tex">\{1, \ldots, n\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">}</span></span></span></span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">5:</span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><mi>w</mi><mo>−</mo><mi>α</mi><mo>⋅</mo><mi mathvariant="normal">∇</mi><msub><mi>f</mi><mover accent="true"><mi>i</mi><mo>~</mo></mover></msub><mo>(</mo><mi>w</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">w \leftarrow w - \alpha \cdot \nabla f_{\tilde i}(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0326659999999999em;vertical-align:-0.282666em;"></span><span class="mord">∇</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.4173340000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.89638em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathdefault mtight">i</span></span><span style="top:-3.2785200000000003em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mtight">~</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.282666em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">6:</span><span class="ps-keyword">end for</span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">7:</span><span class="ps-keyword">return </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">8:</span><span class="ps-keyword">end procedure</span></p>
+</div>
+</div>
+</div>
+</div></div>
+
+    <p>
+      (Possibly we may want to use some averaging or random sampling of the iterates, but we'll ignore that for now.)
+      One problem with <b>Algorithm 1</b> is that since the training examples are chosen at random, they are unpredictable (or to use a more technical term, they have poor memory locality).
+      This can be bad for the memory subsystem of the processor we are running on, especially if it depends on caches that try to predict which data to prefetch and make available for quick access (e.g. a CPU).
+      We will discuss this more in detail later in the course, when we talk about hardware for machine learning.
+      But for the moment, one (naive) way to address this problem is to just sample the training examples in a predictable order.
+      And what order is more predictable than the order in which the training examples appear in memory?
+      This motivates the development of the following <b>sequential-scan-order</b> version of SGD.
+    </p>
+
+    <div class="pseudocode-algorithm" style="display:hidden;"><div class="ps-root">
+<div class="ps-algorithm with-caption">
+<p class="ps-line" style="text-indent:-1.2em;padding-left:1.2em;">
+<span class="ps-keyword">Algorithm 2 </span>Stochastic Gradient Descent with Fixed <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> and Sequential Sampling</p>
+<div class="ps-algorithmic with-linenum">
+<div class="ps-block" style="margin-left:1.7999999999999998em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">1:</span><span class="ps-keyword">procedure </span><span class="ps-funcname">SGD</span>(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>f</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>f</mi><mi>n</mi></msub><mo>)</mo><mo separator="true">,</mo><mi>α</mi><mo separator="true">,</mo><msub><mi>w</mi><mn>0</mn></msub><mo separator="true">,</mo><mtext mathvariant="monospace">num_epochs</mtext></mrow><annotation encoding="application/x-tex">(f_1, \ldots, f_n), \alpha, w_0, \texttt{num\_epochs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span></span></span></span>)</p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">2:</span><span style="font-weight:bold;">initialize</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><msub><mi>w</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">w \leftarrow w_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">3:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext mathvariant="monospace">num_epochs</mtext></mrow><annotation encoding="application/x-tex">\texttt{num\_epochs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">4:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-4.5em;">5:</span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><mi>w</mi><mo>−</mo><mi>α</mi><mo>⋅</mo><mi mathvariant="normal">∇</mi><msub><mi>f</mi><mi>i</mi></msub><mo>(</mo><mi>w</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">w \leftarrow w - \alpha \cdot \nabla f_i(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∇</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">6:</span><span class="ps-keyword">end for</span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">7:</span><span class="ps-keyword">end for</span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">8:</span><span class="ps-keyword">return </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">9:</span><span class="ps-keyword">end procedure</span></p>
+</div>
+</div>
+</div>
+</div></div>
+
+    <p>
+      Here, <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext mathvariant="monospace">num_epochs</mtext></mrow><annotation encoding="application/x-tex">\texttt{num\_epochs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span></span></span></span></span> denotes the number of <b>epochs</b>, or passes through the dataset, used in training.
+      The total number of iterations here will be <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mo>=</mo><mtext mathvariant="monospace">num_epochs</mtext><mo>⋅</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">T = \texttt{num\_epochs} \cdot n / B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.13889em;">T</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span></span></span></span></span>.
+      <b>Algorithm 2</b> can run individual iterations faster than <b>Algorithm 1</b> because its memory accesses are more predictable.
+      (Although note that our convergence proofs from class do not apply to this modified sequential-sampling algorithm, and more care is needed to get convergence guarantees here.)
+    </p>
+
+    <p>
+      We can do the same thing with minibatching.
+      The original version of minibatched SGD we discussed in class uses a random with-replacement subsample of size <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span></span></span></span></span> as follows:
+    </p>
+
+    <div class="pseudocode-algorithm" style="display:hidden;"><div class="ps-root">
+<div class="ps-algorithm with-caption">
+<p class="ps-line" style="text-indent:-1.2em;padding-left:1.2em;">
+<span class="ps-keyword">Algorithm 3 </span>Minibatch SGD with Fixed <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> and Random Sampling</p>
+<div class="ps-algorithmic with-linenum">
+<div class="ps-block" style="margin-left:1.7999999999999998em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">1:</span><span class="ps-keyword">procedure </span><span class="ps-funcname">SGD</span>(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>f</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>f</mi><mi>n</mi></msub><mo>)</mo><mo separator="true">,</mo><mi>α</mi><mo separator="true">,</mo><msub><mi>w</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>B</mi><mo separator="true">,</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">(f_1, \ldots, f_n), \alpha, w_0, B, T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>)</p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">2:</span><span style="font-weight:bold;">initialize</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><msub><mi>w</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">w \leftarrow w_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">3:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">4:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-4.5em;">5:</span><span style="font-weight:bold;">sample</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>i</mi><mo>~</mo></mover><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">\tilde i_b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0463799999999999em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.89638em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault">i</span></span><span style="top:-3.57852em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;">~</span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> <span style="font-weight:bold;">uniformly at random from</span>   <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>n</mi><mo>}</mo></mrow><annotation encoding="application/x-tex">\{1, \ldots, n\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">}</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">6:</span><span class="ps-keyword">end for</span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">7:</span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><mi>w</mi><mo>−</mo><mi>α</mi><mo>⋅</mo><mfrac><mn>1</mn><mi>B</mi></mfrac><msubsup><mo>∑</mo><mrow><mi>b</mi><mo>=</mo><mn>1</mn></mrow><mi>B</mi></msubsup><mi mathvariant="normal">∇</mi><msub><mi>f</mi><msub><mover accent="true"><mi>i</mi><mo>~</mo></mover><mi>b</mi></msub></msub><mo>(</mo><mi>w</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">w \leftarrow w - \alpha \cdot \frac{1}{B} \sum_{b = 1}^B \nabla f_{\tilde i_b}(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.369757em;vertical-align:-0.3885259999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">b</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∇</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.4173340000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.89638em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathdefault mtight">i</span></span><span style="top:-3.2785200000000003em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mtight">~</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3885259999999999em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">8:</span><span class="ps-keyword">end for</span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">9:</span><span class="ps-keyword">return </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">10:</span><span class="ps-keyword">end procedure</span></p>
+</div>
+</div>
+</div>
+</div></div>
+
+    <p>
+      In order to make the accesses here more predictable, we can do the same thing as we did to baseline SGD, provided that the minibatch size <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span></span></span></span></span> evenly divides the training set size <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault">n</span></span></span></span></span>.
+    </p>
+
+    <div class="pseudocode-algorithm" style="display:hidden;"><div class="ps-root">
+<div class="ps-algorithm with-caption">
+<p class="ps-line" style="text-indent:-1.2em;padding-left:1.2em;">
+<span class="ps-keyword">Algorithm 4 </span>Minibatch SGD with Fixed <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span> and Sequential Sampling</p>
+<div class="ps-algorithmic with-linenum">
+<div class="ps-block" style="margin-left:1.7999999999999998em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">1:</span><span class="ps-keyword">procedure </span><span class="ps-funcname">SGD</span>(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>f</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>f</mi><mi>n</mi></msub><mo>)</mo><mo separator="true">,</mo><mi>α</mi><mo separator="true">,</mo><msub><mi>w</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>B</mi><mo separator="true">,</mo><mtext mathvariant="monospace">num_epochs</mtext></mrow><annotation encoding="application/x-tex">(f_1, \ldots, f_n), \alpha, w_0, B, \texttt{num\_epochs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span></span></span></span>)</p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">2:</span><span style="font-weight:bold;">initialize</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><msub><mi>w</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">w \leftarrow w_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">3:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext mathvariant="monospace">num_epochs</mtext></mrow><annotation encoding="application/x-tex">\texttt{num\_epochs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">4:</span><span class="ps-keyword">for </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">i = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> <span class="ps-keyword">to</span> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>B</mi><mo>)</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">(n / B) - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span><span class="ps-keyword"> do</span></p>
+<div class="ps-block" style="margin-left:1.2em;">
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-4.5em;">5:</span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo>←</mo><mi>w</mi><mo>−</mo><mi>α</mi><mo>⋅</mo><mfrac><mn>1</mn><mi>B</mi></mfrac><msubsup><mo>∑</mo><mrow><mi>b</mi><mo>=</mo><mn>1</mn></mrow><mi>B</mi></msubsup><mi mathvariant="normal">∇</mi><msub><mi>f</mi><mrow><mi>i</mi><mo>⋅</mo><mi>B</mi><mo>+</mo><mi>b</mi></mrow></msub><mo>(</mo><mi>w</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">w \leftarrow w - \alpha \cdot \frac{1}{B} \sum_{b = 1}^B \nabla f_{i \cdot B + b}(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.326231em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">b</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∇</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">⋅</span><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-3em;">6:</span><span class="ps-keyword">end for</span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">7:</span><span class="ps-keyword">end for</span></p>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:-1.5em;">8:</span><span class="ps-keyword">return </span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span></p>
+</div>
+<p class="ps-line ps-code">
+<span class="ps-linenum" style="left:0em;">9:</span><span class="ps-keyword">end procedure</span></p>
+</div>
+</div>
+</div>
+</div></div>
+
+    <p>
+      Once again, <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext mathvariant="monospace">num_epochs</mtext></mrow><annotation encoding="application/x-tex">\texttt{num\_epochs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span></span></span></span></span> denotes the number of <b>epochs</b>, or passes through the dataset, used in training.
+      The total number of iterations here will be <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mo>=</mo><mtext mathvariant="monospace">num_epochs</mtext><mo>⋅</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">T = \texttt{num\_epochs} \cdot n / B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.13889em;">T</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span></span></span></span></span>, and we assume that <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span></span></span></span></span> divides <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault">n</span></span></span></span></span> evenly.
+      In this programming assignment, we will implement, and explore the performance of all of these algorithms, as well as some variants that use a different step size at each iteration.
+    </p>
+
+    <p></p>
+      <b>Instructions:</b> This project is split into three parts: the implementation of the basic functionality of SGD, the exploration of the effects of the hyperparameters (the step size and minibatch size), and evaluation of the systems cost of running SGD.
+    <p>
+
+    </p><p><b>Part 1: Implementation.</b>
+      </p><ol>
+        <li>Implement a function to compute the gradient of a batch of training examples for multinomial logistic regression (with l2 regularization) on MNIST.</li>
+        <ul>
+          <li>You can also use this function to compute the gradient of a single training example by passing in a list with only a single index in it (i.e. a minibatch of size 1).</li> 
+        </ul>
+        <li>Implement the four stochastic gradient descent algorithms described above in the Background section.</li>
+        <ul>
+          <li>For consistency, the functions in the starter code in <code>mnist.py</code> take in how long the algorithm needs to run for in terms of epochs, i.e. total passes through the dataset. You will need to modify Algorithms 1 and 3 from their descriptions above accordingly, using the above expressions <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mo>=</mo><mtext mathvariant="monospace">num_epochs</mtext><mo>⋅</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">T = \texttt{num\_epochs} \cdot n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.13889em;">T</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault">n</span></span></span></span></span> for Algorithm 1 and <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mo>=</mo><mtext mathvariant="monospace">num_epochs</mtext><mo>⋅</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">T = \texttt{num\_epochs} \cdot n / B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.13889em;">T</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.83333em; vertical-align: -0.22222em;"></span><span class="mord text"><span class="mord texttt">num_epochs</span></span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span></span></span></span></span> for Algorithm 3. This ensures that the same number of total gradient samples are used for all the algorithms.</li>
+        </ul>
+        <li>Run both non-minibatched SGD algorithms (Algorithms 1 and 2) with L2 regularization parameter <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0.0001</mn></mrow><annotation encoding="application/x-tex">\gamma = 0.0001</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.625em; vertical-align: -0.19444em;"></span><span class="mord mathdefault" style="margin-right: 0.05556em;">γ</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">1</span></span></span></span></span> and step size <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.001</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.001</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.0037em;">α</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">0</span><span class="mord">1</span></span></span></span></span> for 10 epochs, and record the value of the parameters every 6000 update iterations (i.e. 60000 training examples gives 10 times per epoch).</li>
+        <li>Run both minibatched SGD algorithms (Algorithms 3 and 4) with L2 regularization parameter <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0.0001</mn></mrow><annotation encoding="application/x-tex">\gamma = 0.0001</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.625em; vertical-align: -0.19444em;"></span><span class="mord mathdefault" style="margin-right: 0.05556em;">γ</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">1</span></span></span></span></span>, step size <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.0037em;">α</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">5</span></span></span></span></span>, and minibatch size <span><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi><mo>=</mo><mn>60</mn></mrow><annotation encoding="application/x-tex">B = 60</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.05017em;">B</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.64444em; vertical-align: 0em;"></span><span class="mord">6</span><span class="mord">0</span></span></span></span></span> for 10 epochs, and record the value of the parameters every 100 batch update iterations (i.e. 10 times per epoch).</li>
+        <li>Evaluate the training error and test error of each recorded model exactly, using the entire MNIST training and test dataset. (You can use your code from Programming Assignment 1 to do this.)</li>
+        <li>Plot the resulting error against the number of epochs in two figures, one for Training error and one for Test error. How does the performance of the four methods compare?</li>
+      </ol>
+    <p></p>
+
+    <p><b>Part 2: Exploration.</b>
+      </p><ol>
+        <li>For stochastic gradient descent (Algorithm 1) evaluate some other values of the step size other than the one given to you in Part 1.</li>
+        <li>For SGD (Algorithm 1), find a value of the step size that allows the algorithm to reach a lower training error after 10 epochs than the step size given to you in Part 1. What effect does this changed step size have on the final test error?</li>
+        <li>For SGD (Algorithm 1), can you find a value of the step size that allows the algorithm to reach the same (or better) training error after 5 epochs than could be achieved in 10 epochs using the step size given to you in Part 1? (This may be the same step size that you used in the previous step.) What effect does this changed step size have on the final test error after 5 epochs?</li>
+        <li>Now do the same thing for minibatch SGD with sequential scan (Algorithm 4). Can you find a value for the batch size and learning rate that allows the algorithm to reach the same (or better) training error after 5 epochs than could be achieved in 10 epochs using the step size given to you in Part 1? What effect does this changed step size have on the final test error after 5 epochs?</li>
+        <li>For at least three different algorithm configurations you explored in this Part, plot the resulting error against the number of epochs in two figures, one for Training error and one for Test error, just as you did for the evaluation in Part 1.</li>
+        <ul>
+          <li>If you found hyperparameters that improved the performance in Steps 2, 3, and 4, use those hyperparameters for these figures.</li>
+        </ul>
+      </ol>
+    <p></p>
+
+    <p><b>Part 3: Systems Evaluation.</b>
+      </p><ol>
+        <li>Measure the runtime of all four algorithms using the configurations prescribed in Part 1. How does the runtime of the algorithms compare?</li>
+        <ul>
+          <li>To measure the runtime of each algorithm, measure the wall clock time it takes it to run all its epochs, and average your result across five (5) total runs of the algorithm.</li>
+        </ul>
+        <li>You should observe that some of the algorithms run an epoch in substantially less time than the other algorithms do. Can you explain why?</li>
+      </ol>
+    <p></p>
+
+    <p>
+      <span class="bf">What to submit:</span>
+      </p><ol>
+        <li>An implementation of the functions in main.py.</li>
+        <li>A lab report containing:
+          <ul>
+            <li>A one-paragraph summary of what you observed during this programming assignment.</li>
+            <li>Plots of the training and test error of the result of your training, as described in Part 1.</li>
+            <li>Text describing how the performance of the four models compare, when evaluated against number of epochs.</li>
+            <li>A list of step sizes you evaluated in Part 2.1.</li>
+            <li>A step size that allows SGD to reach a lower training error as described in Part 2.2.</li>
+            <li>A step size that allows SGD to reach a lower training error as described in Part 2.3.</li>
+            <li>A step size/minibatch size that allows minibatch SGD to reach a lower training error as described in Part 2.4.</li>
+            <li>Plots of the training and test error (at least three pairs of plots) as described in Part 2.5.</li>
+            <li>The measured runtime of all four algorithms. Text describing how the runtimes of the algorithms compare.</li>
+            <li>An explanation for why minibatch SGD with sequential sampling runs faster.</li>
+          </ul>
+        </li>
+      </ol>
+    <p></p>
+
+    <p>
+      <span class="bf">Setup:</span>
+      </p><ol>
+          <li>Run <code>pip3 install -r requirements.txt</code> to install the required python packages</li>
+      </ol>
+    <p></p>
+
+  
+
+</body></html>
